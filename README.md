@@ -8,9 +8,17 @@ It complements existing tests. A passing result covers the configured examples, 
 
 ## Install from GitHub Releases
 
-For Linux/WSL x86_64, use the prebuilt archive from [v0.1.0](https://github.com/zhugez/invar/releases/tag/v0.1.0). See the [download, checksum, and PATH instructions](docs/releases/v0.1.0.md). The CLI needs neither Rust nor Python. Your configured commands still need their own runtimes.
+For **Linux/WSL x86_64**, install the prebuilt release with one command:
 
-The archive includes the executable, licenses, dependency notices, and build provenance. Set `INVAR_BIN` to the absolute path of the extracted `invar` executable to use the examples below. Repository demonstration scripts require a source checkout.
+```sh
+curl -fsSL https://github.com/zhugez/invar/raw/main/install.sh | sh
+```
+
+The installer currently installs **v0.1.0**. It checks the archive against a pinned SHA-256, retains the complete package under `${XDG_DATA_HOME:-$HOME/.local/share}/invar/0.1.0`, and links `~/.local/bin/invar` to the executable. It needs no sudo, Rust, or Python. Your configured commands still need their own runtimes.
+
+If `~/.local/bin` is absent from PATH, the installer adds it to the Bash, Zsh, or POSIX shell configuration. Open a new terminal after that change. Other shells receive a PATH instruction. An existing executable or symlink from another installation is left untouched.
+
+See [install.sh](install.sh) for the installer and [manual download instructions](docs/releases/v0.1.0.md) for the [v0.1.0 archive](https://github.com/zhugez/invar/releases/tag/v0.1.0). The archive retains licenses, dependency notices, and build provenance. Set `INVAR_BIN` to the absolute path of the installed `invar` executable to use the examples below. Repository demonstration scripts require a source checkout.
 
 ## Build from source
 

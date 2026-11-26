@@ -38,6 +38,20 @@ The musl COPYRIGHT notice is retained verbatim from upstream commit `7813e9119eb
 
 Run the target tests and demonstrations, inspect the archive, and pin the release to the recorded source commit. Publishing or pushing still requires authorization. Validate uploaded assets before publishing a draft, then download and verify the public release.
 
+### One-command installer
+
+`install.sh` pins the published version and archive SHA-256. It retains the complete release package and updates a user-local executable symlink. It refuses to overwrite a file or foreign symlink at that path. PATH setup preserves existing shell configuration.
+
+After publishing a new archive, update the installer's version and digest from that exact asset. Run the isolated installer checks with a downloaded copy:
+
+```sh
+python3 scripts/check_installer.py --archive /absolute/path/to/invar-v0.1.0-x86_64-unknown-linux-musl.tar.gz
+```
+
+The checks use temporary homes and local download fixtures. They need Python 3 and standard Linux tools, but make no network requests. They exercise installation, reinstallation, shell configuration, unsupported platforms, collisions, failed downloads, checksum failures, and preservation of an earlier installation. The archive argument must identify the published bytes, not a fresh rebuild.
+
+Commit the installer, attach `install.sh` to the matching GitHub release, and verify the public one-command installation in a temporary home. Do not move an existing release tag, replace the published archive, or rebuild its provenance to include a later installer-only commit.
+
 ## Engineering rules
 
 - Preserve candidate/accepted separation. Capture cannot approve. Verification cannot write expectations.
