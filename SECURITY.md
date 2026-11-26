@@ -17,4 +17,6 @@ See the [threat model](docs/security/threat-model.md) and [specification](docs/s
 
 ## Reporting
 
-This repository has no established private vulnerability-reporting channel. Do not post credentials or exploit-sensitive details publicly. Maintainers should establish a private channel before distribution. For non-sensitive defects, provide the version, platform, minimal configuration, expected behavior, and observed result. Never include real secrets in captured artifacts.
+Report vulnerabilities through [GitHub private vulnerability reporting](https://github.com/zhugez/invar/security/advisories/new). This channel is enabled for the repository and requires a GitHub account. Do not post credentials or exploit-sensitive details publicly.
+
+For non-sensitive defects, provide the version, platform, minimal configuration, expected behavior, and observed result. Never include real secrets in captured artifacts.
