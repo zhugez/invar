@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Invar brand kit. Logos, colors, typography, and voice for the local command verification tool.">
+  <meta name="theme-color" content="#2347F5">
+  <meta name="color-scheme" content="light dark">
+  <title>Invar — Brand kit</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preload" href="fonts/Barlow-Bold.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="preview.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to brand kit</a>
+  <header class="masthead wrap">
+    <a class="home-link" href="#main" aria-label="Invar brand kit">
+      <img class="light-logo" src="assets/logo-mono.svg" width="340" height="82" alt="Invar">
+      <img class="dark-logo" src="assets/logo-reversed.svg" width="340" height="82" alt="Invar">
+    </a>
+    <nav aria-label="Brand kit">
+      <a href="#identity">Identity</a>
+      <a href="#assets">Assets</a>
+      <a href="#guidelines">Guidelines</a>
+    </nav>
+    <span class="edition">Brand kit <span>v0.1</span></span>
+  </header>
+
+  <main id="main" class="wrap" tabindex="-1">
+    <h1 class="sr-only">Invar brand kit</h1>
+    <div class="identity-plate" aria-label="Invar identity in Signal Blue">
+      <div class="plate-rule top-rule" aria-hidden="true"></div>
+      <img class="hero-logo" src="assets/logo-reversed.svg" alt="Invar" width="340" height="82" fetchpriority="high">
+      <div class="plate-rule bottom-rule" aria-hidden="true"></div>
+      <div class="plate-caption"><span>CHANGE CODE. PRESERVE BEHAVIOR.</span><span>THE INVARIANT SPINE</span></div>
+    </div>
+
+    <section class="introduction" aria-labelledby="tagline">
+      <h2 id="tagline">Change code.<br><span>Preserve behavior.</span></h2>
+      <div>
+        <p>A clear identity for a precise tool. Invar captures command behavior, keeps approval explicit, and compares later runs with accepted examples.</p>
+        <a class="text-link" href="README.md">Read the brand guidelines <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19 19 5M5 5h14v14"/></svg></a>
+      </div>
+    </section>
+
+    <section id="identity" class="section construction" aria-labelledby="identity-heading">
+      <div class="section-intro">
+        <h2 id="identity-heading">Built around<br>what stays.</h2>
+        <p>Two displaced caps. One fixed spine. The mark is a custom I: a small expression of code changing around the behavior you chose to preserve.</p>
+        <p class="muted">A reference point, not a security seal. The identity never promises complete coverage or guaranteed correctness.</p>
+      </div>
+      <div class="construction-panel">
+        <div class="drawing">
+          <svg class="construction-mark" viewBox="0 0 128 96" role="img" aria-labelledby="construction-title construction-desc">
+            <title id="construction-title">The invariant spine</title>
+            <desc id="construction-desc">The upper and lower bars move in opposite directions. The middle stem stays fixed. This is an illustrative study, not the exported logo.</desc>
+            <g class="drawing-guides" fill="none"><path d="M16 24H112M16 72H112M64 4V92M40 10V86M88 10V86"/></g>
+            <g fill="currentColor"><rect class="cap-top" x="42" y="24" width="44" height="12"/><rect x="58" y="36" width="12" height="24"/><rect class="cap-bottom" x="42" y="60" width="44" height="12"/></g>
+            <g class="registration" fill="none"><path d="M16 8v8M12 12h8M112 80v8M108 84h8"/></g>
+          </svg>
+          <span class="drawing-note">FIXED AXIS</span>
+        </div>
+        <div class="slider-caption"><label for="displacement">Move the caps. Keep the spine.</label><output for="displacement" id="displacement-value">2 units</output></div>
+        <input id="displacement" type="range" min="0" max="10" step="1" value="2" aria-describedby="study-note">
+        <p id="study-note" class="fineprint">Illustrative movement study. Downloads retain the fixed export geometry.</p>
+      </div>
+    </section>
+
+    <section id="assets" class="section" aria-labelledby="assets-heading">
+      <div class="section-heading"><h2 id="assets-heading">One mark. Every setting.</h2><p>Path-based SVGs. Transparent backgrounds.<br>No font dependency in the logos.</p></div>
+      <div class="logo-proofs">
+        <figure class="logo-proof proof-light"><img src="assets/logo-primary.svg" width="340" height="82" alt="Primary Invar logo: blue mark and graphite lettering"><figcaption>Primary <a href="assets/logo-primary.svg" download aria-label="Save primary logo as SVG">Save SVG <span aria-hidden="true">↓</span></a></figcaption></figure>
+        <figure class="logo-proof proof-dark"><img src="assets/logo-reversed.svg" width="340" height="82" alt="Reversed Invar logo in Chalk on Graphite"><figcaption>Reversed <a href="assets/logo-reversed.svg" download aria-label="Save reversed logo as SVG">Save SVG <span aria-hidden="true">↓</span></a></figcaption></figure>
+      </div>
+      <div class="asset-rows">
+        <div class="asset-row"><span>Monochrome lockup</span><span class="asset-description">For single-color reproduction</span><a href="assets/logo-mono.svg" download aria-label="Save monochrome logo as SVG">SVG <span aria-hidden="true">↓</span></a></div>
+        <div class="asset-row"><span>Wordmark</span><span class="asset-description">Custom lettering, without the symbol</span><a href="assets/wordmark.svg" download aria-label="Save wordmark as SVG">SVG <span aria-hidden="true">↓</span></a></div>
+        <div class="asset-row"><span>Standalone mark</span><span class="asset-description">Keep at least one stem width clear</span><div><a href="assets/mark.svg" download aria-label="Save blue standalone mark as SVG">Blue SVG <span aria-hidden="true">↓</span></a><a href="assets/mark-reversed.svg" download aria-label="Save reversed standalone mark as SVG">Reversed SVG <span aria-hidden="true">↓</span></a></div></div>
+        <div class="asset-row"><span>App &amp; repository icon</span><span class="asset-description">Square, 512 × 512</span><div><a href="assets/icon.svg" download aria-label="Save square icon as SVG">SVG <span aria-hidden="true">↓</span></a><a href="assets/icon.png" download aria-label="Save square icon as PNG">PNG <span aria-hidden="true">↓</span></a></div></div>
+        <div class="asset-row"><span>Favicon</span><span class="asset-description">Mark only, with an opaque blue ground</span><a href="assets/favicon.svg" download aria-label="Save favicon as SVG">SVG <span aria-hidden="true">↓</span></a></div>
+      </div>
+      <p class="fineprint">Minimum recommended width: 144 px for the lockup, 16 px for the mark. Keep the proportions. Use the reversed version on dark grounds.</p>
+    </section>
+
+    <section class="section" aria-labelledby="palette-heading">
+      <div class="section-heading"><h2 id="palette-heading">Signal, with restraint.</h2><p>Blue carries the identity.<br>Neutrals give the work room.</p></div>
+      <div class="palette">
+        <div class="swatch swatch-blue"><span>Signal Blue</span><code>#2347F5</code></div>
+        <div class="swatch swatch-graphite"><span>Graphite</span><code>#17262C</code></div>
+        <div class="swatch swatch-chalk"><span>Chalk</span><code>#F3F6F7</code></div>
+        <div class="swatch swatch-steel"><span>Steel</span><code>#586A74</code></div>
+        <div class="swatch swatch-line"><span>Line</span><code>#CFD8DC</code></div>
+      </div>
+      <div class="palette-notes"><p>Use Graphite for primary text, Steel for secondary text, and Blue for emphasis. Line is a decorative separator, never the sole boundary of an interactive control.</p><a class="text-link" href="tokens.json" download>Design tokens <span aria-hidden="true">↓</span></a><a class="text-link" href="tokens.css" download>CSS variables <span aria-hidden="true">↓</span></a></div>
+    </section>
+
+    <section class="section type-section" aria-labelledby="type-heading">
+      <div class="section-intro"><h2 id="type-heading">Clear at every scale.</h2><p>Barlow brings a direct, engineered rhythm without turning the whole identity into terminal output.</p><p class="muted">Regular 400 for reading. Bold 700 for hierarchy. System monospace for code and literal values.</p><a class="text-link" href="fonts/OFL.txt">Font license <span aria-hidden="true">↗</span></a></div>
+      <div class="type-specimen"><div class="type-name"><span>Barlow</span><span>400 / 700</span></div><p class="type-display">Make changes.<br>Keep your bearings.</p><p class="type-body">Capture command results. Review the candidate. Approve it explicitly. Compare later runs with the accepted behavior.</p><div class="code-specimen"><code>invar verify --json</code><span>CODE / SYSTEM MONOSPACE</span></div></div>
+    </section>
+
+    <section id="guidelines" class="section voice-section" aria-labelledby="voice-heading">
+      <div class="section-intro"><h2 id="voice-heading">Sound like the tool.</h2><p>Precise. Direct. Accountable.</p><p class="muted">Name the observation. State the limit. Give the next action. Confidence comes from evidence, not absolutes.</p></div>
+      <div class="voice-examples"><div><h3>Say what was checked.</h3><p class="say">“All configured examples match accepted behavior.”</p><p class="avoid">Avoid: “Your code cannot break.”</p></div><div><h3>Describe the difference.</h3><p class="say">“stdout changed. Review the first differing byte.”</p><p class="avoid">Avoid: “The AI made your app unsafe.”</p></div><div><h3>Keep approval explicit.</h3><p class="say">“Review the candidate before locking it.”</p><p class="avoid">Avoid: “Automatically trust the new baseline.”</p></div></div>
+    </section>
+
+    <section class="section applications" aria-labelledby="application-heading">
+      <div class="section-heading"><h2 id="application-heading">Ready to put to work.</h2><p>The same idea, from the smallest icon<br>to the next project update.</p></div>
+      <figure class="social-preview"><img src="assets/social-card.svg" width="1200" height="630" alt="Invar social image: Change code. Preserve behavior. Capture. Review. Verify." loading="lazy"><figcaption><span>Social &amp; repository preview · 1200 × 630</span><span><a href="assets/social-card.svg" download aria-label="Save social image as SVG">SVG <span aria-hidden="true">↓</span></a><a href="assets/social-card.png" download aria-label="Save social image as PNG">PNG <span aria-hidden="true">↓</span></a></span></figcaption></figure>
+      <div class="application-bottom"><div class="small-icons"><img src="assets/icon.svg" width="96" height="96" alt="Invar square icon"><img src="assets/favicon.svg" width="32" height="32" alt="Invar favicon at 32 pixels"><span>Same spine.<br>Less space.</span></div><div class="application-note"><h3>Keep the product honest.</h3><p>The CLI stays readable in the user’s terminal. JSON stays plain. A passing check covers configured examples. The logo is an identity, not a guarantee.</p><a class="text-link" href="../README.md">Read about Invar <span aria-hidden="true">↗</span></a></div></div>
+    </section>
+  </main>
+
+  <footer class="footer wrap"><span>Invar. Change code. Preserve behavior.</span><div><a href="README.md">Usage guide</a><a href="manifest.json">Asset manifest</a><a href="../LICENSE">Project license</a></div><span>Brand proposal · v0.1</span></footer>
+</body>
+</html>

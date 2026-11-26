@@ -1,0 +1,31 @@
+{
+  "identity": "Invariant spine",
+  "artwork": "Original vector geometry. Logos contain paths, not font references.",
+  "raster_exports": {
+    "icon.png": [
+      512,
+      512
+    ],
+    "social-card.png": [
+      1200,
+      630
+    ]
+  },
+  "font_source": "https://github.com/google/fonts/tree/main/ofl/barlow",
+  "font_license": "fonts/OFL.txt",
+  "fonts_sha256": {
+    "Barlow-Bold.ttf": "84e6a4d61e7c3e21f3c50ea6a4f7e5303a3467864c038be6ea3759bab8d547f9",
+    "Barlow-Regular.ttf": "95aa02c7c43096e0dd44d787ba6216864a67157e402adab59b35572e0c1577ea"
+  },
+  "svg_assets": [
+    "favicon.svg",
+    "icon.svg",
+    "logo-mono.svg",
+    "logo-primary.svg",
+    "logo-reversed.svg",
+    "mark-reversed.svg",
+    "mark.svg",
+    "social-card.svg",
+    "wordmark.svg"
+  ]
+}

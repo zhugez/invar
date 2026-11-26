@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "sorted-names",
+      "argv": [
+        "python3",
+        "report.py"
+      ]
+    }
+  ]
+}

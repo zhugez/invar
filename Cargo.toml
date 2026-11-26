@@ -1,0 +1,26 @@
+[package]
+name = "invar-behavior"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.88"
+license = "Apache-2.0"
+description = "Capture, approve, and verify command behavior locally"
+repository = "https://github.com/zhugez/invar"
+publish = false
+
+[[bin]]
+name = "invar"
+path = "src/main.rs"
+
+[dependencies]
+clap = { version = "4.6.10", default-features = false, features = ["std", "derive", "help", "usage", "error-context"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.154"
+sha2 = "0.11.2"
+tempfile = "3.27.0"
+
+[target.'cfg(unix)'.dependencies]
+nix = { version = "0.31.4", default-features = false, features = ["fs", "signal", "process"] }
+
+[lints.rust]
+unsafe_code = "forbid"

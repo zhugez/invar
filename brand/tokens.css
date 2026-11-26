@@ -1,0 +1,12 @@
+:root {
+  --invar-blue: #2347F5;
+  --invar-graphite: #17262C;
+  --invar-chalk: #F3F6F7;
+  --invar-steel: #586A74;
+  --invar-line: #CFD8DC;
+  --invar-pass: #166443;
+  --invar-change: #A23D27;
+  --invar-review: #805907;
+  --invar-font-sans: "Barlow", sans-serif;
+  --invar-font-mono: ui-monospace, SFMono-Regular, Consolas, monospace;
+}
