@@ -1,6 +1,6 @@
 # Verification evidence
 
-Recorded on 2026-11-26 from actual commands in this session. These are local engineering checks, not independent certification or user research.
+Initial checks recorded on 2026-11-26, with release-packaging checks added on 2026-11-27. These are local engineering checks, not independent certification or user research.
 
 ## Environment
 
@@ -56,9 +56,19 @@ Added a Serde rename from `command` to `operation` in the copy, without changing
 
 The final run took 9.267 seconds with cached registry dependencies and offline builds. Candidate/accepted bytes and the original Rust source stayed unchanged. The temporary source and build directories were removed. This is deliberate fault injection in a real CLI, not a naturally discovered production defect or an external customer evaluation. Adding a conventional assertion for this field would also detect the change.
 
+## Linux release packaging — 2026-11-27
+
+Built `x86_64-unknown-linux-musl` on the same WSL2 host. `cargo test --locked --release --all-targets --target x86_64-unknown-linux-musl` passed all 19 tests. `cargo clippy --locked --all-targets --target x86_64-unknown-linux-musl -- -D warnings` passed without warnings.
+
+`python3 scripts/package_release.py` built offline, stripped a copy, checked `invar 0.1.0`, and inspected ELF program headers/dynamic entries. No interpreter or needed shared libraries were present. Archive checks passed, including the executable hash/permissions and retained Unicode and musl notices. The package includes notice sets for 37 target-graph dependencies, including build-time dependencies, plus the compiler's standard-library notices and the upstream musl copyright notice. SHA256SUMS hashes the archive. BUILD-INFO.json identifies the source commit, compiler, target, and binary/lockfile hashes.
+
+The musl executable also passed the ordering demonstration and the isolated real-Rust fault-injection demonstration. Both returned pass → regression → repaired pass, preserved accepted/candidate bytes, and removed temporary projects. The dogfood run took 9.204 seconds with cached dependencies. This is not independent platform certification or a cold-start benchmark.
+
+These checks establish local packaging and Linux/WSL x86_64 runtime evidence. They do not establish a macOS binary, signed artifacts, reproducible builds, or a dependency advisory audit. See the [release guide](releases/v0.1.0.md) for asset names and installation.
+
 ## Onboarding measurement
 
-Extracted all six sh blocks from README.md and executed them in sequence with bash -euo pipefail. Set TMPDIR to an outer TemporaryDirectory so the generated project was clean and cleanup was automatic. The run included the release build, demonstration, manual-workflow commands, escaped candidate inspection, explicit lock, human/JSON verification, formatting, Clippy, and tests on both toolchains.
+At the original README revision (a6fcb97), extracted all six sh blocks and executed them in sequence with bash -euo pipefail. Set TMPDIR to an outer TemporaryDirectory so the generated project was clean and cleanup was automatic. The run included the release build, demonstration, manual-workflow commands, escaped candidate inspection, explicit lock, human/JSON verification, formatting, Clippy, and tests on both toolchains.
 
 Observed total: **13.245 seconds**, below the 300-second product target for this scripted engineering exercise. The release demonstration itself reported 0.129 seconds. An earlier debug demonstration reported 0.135 seconds.
 
@@ -70,4 +80,4 @@ Reviewed subprocess lifecycle, alternating nonblocking reads, cleanup/error path
 
 Native macOS execution is untested. Windows is unsupported. No external penetration test, advisory audit, customer trial, broad benchmark, or trademark clearance occurred. Google search was unavailable because the research authentication path was unavailable. Primary project documentation and Cargo metadata supplied the bounded research instead.
 
-No Git commit, push, package publication, release, or deployment occurred. See [engineering state](engineering-state.md) and [security limitations](../SECURITY.md).
+The initial checks preceded the authorized project commit/push. Subsequent Linux release packaging is recorded above. See [engineering state](engineering-state.md) and [security limitations](../SECURITY.md).

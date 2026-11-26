@@ -6,7 +6,13 @@ Invar v0.1 is a local behavioral guardrail for coding agents and their maintaine
 
 It complements existing tests. A passing result covers the configured examples, not every possible behavior.
 
-## Build
+## Install from GitHub Releases
+
+For Linux/WSL x86_64, use the prebuilt archive from [v0.1.0](https://github.com/zhugez/invar/releases/tag/v0.1.0). See the [download, checksum, and PATH instructions](docs/releases/v0.1.0.md). The CLI needs neither Rust nor Python. Your configured commands still need their own runtimes.
+
+The archive includes the executable, licenses, dependency notices, and build provenance. Set `INVAR_BIN` to the absolute path of the extracted `invar` executable to use the examples below. Repository demonstration scripts require a source checkout.
+
+## Build from source
 
 Requirements: Rust 1.88 or newer and Linux or macOS. Execution is verified on x86_64 Linux under WSL2. The macOS x86_64 compile check passes. Native macOS linking and execution are untested. Windows is unsupported.
 
@@ -20,7 +26,7 @@ INVAR_BIN="$PWD/target/release/invar"
 
 Use that executable directly. For a local Cargo installation, run `cargo install --path . --locked` after checking for an existing `invar` executable.
 
-The package is named `invar-behavior`, the executable is `invar`, and publication is disabled. Existing Invar names overlap. See the [naming review](docs/research/competitive-analysis.md).
+The package is named `invar-behavior`, the executable is `invar`, and crates.io publication is disabled. Existing Invar names overlap. See the [naming review](docs/research/competitive-analysis.md).
 
 ## Try the complete workflow
 

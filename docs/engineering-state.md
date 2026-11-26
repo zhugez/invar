@@ -1,12 +1,14 @@
 # Engineering state
 
-Session date: 2026-11-26. Package: invar-behavior 0.1.0. Binary: invar. License: Apache-2.0. Publication disabled.
+Updated: 2026-11-27. Package: invar-behavior 0.1.0. Binary: invar. License: Apache-2.0. crates.io publication disabled.
 
 ## Delivered
 
 M0 research/specification and the M1 command-boundary slice exist. init creates configuration and private local state. capture publishes only complete candidates. lock requires the reviewed candidate's hash and explicit replacement permission. verify preflights the complete baseline and never writes state. All three channels compare exactly, with bounded binary-safe diagnostics.
 
-The executable has four modules and no service dependency. Direct dependencies are clap, serde, serde_json, sha2, tempfile, and Unix-only nix. The delivered source set includes Cargo.lock. No Git commit is authorized or created.
+The executable has four modules and no service dependency. Direct dependencies are clap, serde, serde_json, sha2, tempfile, and Unix-only nix. The delivered source set includes Cargo.lock. The initial project was committed and pushed as a6fcb97 with the user's authorization.
+
+The v0.1.0 binary distribution targets Linux/WSL x86_64 with a static musl executable. Local packaging retains dependency/runtime notices and build provenance and emits SHA256SUMS. See the [release installation instructions](releases/v0.1.0.md) and [packaging procedure](../CONTRIBUTING.md#release-packaging). Broader platform distribution remains deferred.
 
 ## Evidence
 
@@ -26,6 +28,6 @@ Then evaluate real maintainer projects before semantic comparators or adapters. 
 - No Windows support, hostile process-tree containment, filesystem/network sandbox, or disk/memory/CPU quota.
 - No trusted-reference enforcement, signatures, remote policy, discovery, agent integration, filesystem contracts, normalization, or semantic JSON.
 - No dependency advisory scan: cargo-audit is unavailable. A metadata/license review and compiler checks are not an advisory audit.
-- No interviews, broad benchmark, trademark clearance, package reservation, release, or telemetry.
+- No interviews, broad benchmark, trademark clearance, package reservation, or telemetry.
 
-Pre-existing .pi state belongs to the goal runtime. Preserve it. No commits, pushes, publication, or deployment occurred.
+Pre-existing .pi state belongs to the goal runtime. Preserve it.

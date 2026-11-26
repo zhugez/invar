@@ -21,6 +21,23 @@ Install the minimum toolchain with rustup toolchain install 1.88.0 --profile min
 
 Add the smallest test that catches changed nontrivial behavior. Keep errors visible. Do not suppress warnings or delete a failing test to make checks pass. Exercise documented commands in a clean temporary project. Record the actual platform and unavailable checks.
 
+## Release packaging
+
+The initial binary distribution targets Linux x86_64 with musl. Packaging requires Linux x86_64, Python 3, GNU binutils (`strip` and `readelf`), the target standard library, and the compiler's `rust-docs` component for retained library notices:
+
+```sh
+rustup target add x86_64-unknown-linux-musl
+rustup component add rust-docs
+cargo fetch --locked --target x86_64-unknown-linux-musl
+python3 scripts/package_release.py
+```
+
+The script refuses tracked Rust-source or lockfile changes relative to HEAD. It builds offline with Cargo.lock, strips a copy, checks the version and static ELF linkage, gathers target-graph dependency notices and runtime notices, checks the archive, and writes the archive plus SHA256SUMS under Cargo's target directory in `dist/`. BUILD-INFO.json records the source commit, compiler, target, and binary/lockfile hashes. This does not establish a reproducible or signed build.
+
+The musl COPYRIGHT notice is retained verbatim from upstream commit `7813e9119eb5fe681b6750b8a033a0490bca0941`, retrieved on 2026-11-27: https://git.musl-libc.org/cgit/musl/tree/COPYRIGHT?id=7813e9119eb5fe681b6750b8a033a0490bca0941. This identifies the notice snapshot, not the compiler's bundled musl version. Rust notices come from the toolchain used for the build. The inventory also retains build-time dependency notices.
+
+Run the target tests and demonstrations, inspect the archive, and pin the release to the recorded source commit. Publishing or pushing still requires authorization. Validate uploaded assets before publishing a draft, then download and verify the public release.
+
 ## Engineering rules
 
 - Preserve candidate/accepted separation. Capture cannot approve. Verification cannot write expectations.
