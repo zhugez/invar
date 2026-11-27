@@ -12,6 +12,7 @@ Install `just` with `cargo install just --locked`. Run from the repository root:
 just check
 cargo build --locked
 python3 scripts/demo.py --invar target/debug/invar
+python3 scripts/check_first_run.py --invar target/debug/invar
 ~~~
 
 `just check` runs formatting, Clippy, tests, and minimum Rust version tests. Run `just fmt`, `just lint`, `just test`, or `just msrv` for an individual check.

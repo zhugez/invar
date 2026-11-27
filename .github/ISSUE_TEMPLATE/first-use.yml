@@ -1,0 +1,72 @@
+name: First-use feedback
+description: Tell us what you tried, where you got stuck, or what worked.
+title: "[First use]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for trying Invar. This issue is public and requires a GitHub account.
+        Use synthetic data. Do not attach raw candidate/accepted snapshots, secrets,
+        credentials, private repository links, or private command output.
+        For vulnerabilities, use private reporting: https://github.com/zhugez/invar/security/advisories/new
+        Early software: no support-response SLA is offered.
+  - type: input
+    id: version
+    attributes:
+      label: Invar version
+      description: Output of invar --version, or say installation did not finish.
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform and installation method
+      description: OS, architecture, shell, and release installer or source build. Include Pi version if relevant.
+      placeholder: "Linux x86_64 under WSL, Bash, release installer"
+    validations:
+      required: true
+  - type: textarea
+    id: job
+    attributes:
+      label: What were you trying to preserve?
+      description: Describe the command's purpose and who consumes its output. Do not paste private output.
+    validations:
+      required: true
+  - type: dropdown
+    id: stage
+    attributes:
+      label: Where did you get to?
+      options:
+        - Installation did not finish
+        - Installed, but did not finish the example
+        - Completed the disposable example
+        - Configured a real command
+        - Verified a real code change
+        - Used it again on another change
+        - Tried the Pi integration
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: What happened, and what did you expect?
+      description: Include the confusing step, sanitized error/exit code, or what worked. Say whether someone helped you.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal synthetic reproduction (optional)
+      description: Harmless command arguments and steps that reproduce the issue; exclude private paths and snapshots.
+  - type: textarea
+    id: alternative
+    attributes:
+      label: What do you use today? (optional)
+      description: Existing tests or snapshot tools, and whether you would try Invar on another change.
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Public report check
+      options:
+        - label: I removed secrets and private output, and I did not attach raw snapshots.
+          required: true

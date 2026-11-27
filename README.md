@@ -8,16 +8,18 @@
 
 <h1 align="center">Change code. Preserve behavior.</h1>
 
-<p align="center">A local behavior check for code changes.</p>
+<p align="center">Reviewed command-output baselines for maintainers using coding agents.</p>
 
 <p align="center">
   <a href="#install">Install</a> ·
   <a href="#quick-start">Quick start</a> ·
-  <a href="#see-it-catch-a-regression">Demos</a> ·
+  <a href="#try-it-in-a-disposable-project">Try it</a> ·
   <a href="#documentation">Documentation</a>
 </p>
 
-Capture reviewed commands, approve a baseline, then compare later runs against it. Invar checks **exit code, stdout, and stderr byte for byte**, alongside your existing tests.
+Use Invar before an agent-assisted refactor of a CLI tool or repository script. Capture a deterministic command, inspect and approve its result, then compare later runs against that reference.
+
+Invar checks **exit code, stdout, and stderr byte for byte**, alongside your existing tests. It runs locally without an account or hosted service. Start with stable output; timestamps and random values will also produce differences.
 
 ## Install
 
@@ -30,6 +32,12 @@ curl -fsSL https://github.com/zhugez/invar/raw/main/install.sh | sh
 The installer checks a pinned SHA-256 and sets up your shell's PATH when supported. Open a new terminal afterward. Your configured commands still need their own runtimes.
 
 [Manual installation](docs/releases/v0.1.0.md) · [Build from source](docs/getting-started.md#build-from-source)
+
+## Try it in a disposable project
+
+Follow the **[first-run walkthrough](docs/first-run.md)** after installation. It creates a harmless temporary example, shows the exact candidate for review, catches an ordering regression, and verifies the repair: **pass → regression → pass**.
+
+The walkthrough needs Python 3 and a POSIX shell. It does not require Rust, Git, a source checkout, or changes to your project. Prefer Pi? See the [Pi setup guide](integrations/pi/README.md).
 
 ## Quick start
 
@@ -104,8 +112,16 @@ Use `invar --json verify` for a versioned, machine-readable report.
 - **Approval needs review.** Hashes pin a candidate. They do not authenticate a reviewer. Protect the executable, configuration, and baseline from unauthorized changes.
 - **Commands are not sandboxed.** They run with your filesystem and network access. Review commands before capture. Read the [security policy](SECURITY.md).
 
+## First-use feedback
+
+Where did you get stuck, and which real command would you preserve? [Share first-use feedback](https://github.com/zhugez/invar/issues/new?template=first-use.yml), or [open an ordinary issue](https://github.com/zhugez/invar/issues/new) if the form is unavailable. Include your platform, version, and a synthetic reproduction. Exclude secrets, raw baselines, and private command output. For vulnerabilities, use [private reporting](SECURITY.md#reporting).
+
+This is early software. No support-response SLA is offered.
+
 ## Documentation
 
+- [First run](docs/first-run.md) — a standalone example with the installed binary.
+- [Pi integration](integrations/pi/README.md) — command suggestions, capture confirmation, and baseline approval.
 - [Getting started](docs/getting-started.md) — detailed installation, source builds, demonstrations, and baseline review.
 - [Specification](docs/specification.md) · [Architecture](docs/architecture.md) — formats, execution rules, limits, and storage.
 - [Contributing](CONTRIBUTING.md) · [Verification evidence](docs/verification.md) — development checks and what has been exercised.

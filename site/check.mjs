@@ -8,6 +8,7 @@ const evaluate = code => JSON.parse(browser('eval', code));
 
 try {
   browser('open', base);
+  browser('snapshot', '-i');
   for (const width of [1440, 768, 390, 320]) {
     browser('set', 'viewport', String(width), '1000');
     assert.equal(evaluate('document.documentElement.scrollWidth <= innerWidth'), true, `Horizontal overflow at ${width}px`);
@@ -18,6 +19,9 @@ try {
     const assert = (value, message) => { if (!value) throw Error(message); };
     assert(document.querySelectorAll('h1').length === 1, 'Expected a single main heading');
     assert(document.fonts.check('16px Barlow'), 'Brand font did not load');
+    assert(document.querySelector('#get-started a.text-link').href === 'https://github.com/zhugez/invar/blob/main/docs/first-run.md', 'Installation has no first-run path');
+    assert(document.querySelector('.source-link').href === 'https://github.com/zhugez/invar/blob/main/docs/getting-started.md#build-from-source', 'Source-build link is wrong');
+    assert(document.querySelector('footer a[href*="issues/new"]'), 'Feedback route is missing');
     for (const link of document.querySelectorAll('a[href^="#"]')) {
       assert(document.getElementById(link.hash.slice(1)), 'Broken anchor: ' + link.hash);
     }
@@ -37,6 +41,14 @@ try {
     for (const asset of assets) assert((await fetch(asset)).ok, 'Missing asset: ' + asset);
     return { responsiveWidths: [1440, 768, 390, 320], scenarios: ['changed', 'matching'], clipboard: 'passed', assets: assets.length };
   })()`);
+  for (const width of [1440, 390]) {
+    browser('set', 'viewport', String(width), '1000');
+    browser('open', base);
+    browser('snapshot', '-i');
+    browser('click', '.hero-actions .button-primary');
+    browser('snapshot', '-i');
+    assert.equal(evaluate('location.hash'), '#get-started', 'Primary action did not reach installation');
+  }
   console.log(JSON.stringify(result, null, 2));
 } finally {
   browser('close');

@@ -1,6 +1,6 @@
 # Getting started
 
-Installation, source builds, demonstrations, baseline review, and operating limits. For the short introduction, see the [README](../README.md).
+Installation, source builds, demonstrations, baseline review, and operating limits. For the short introduction, see the [README](../README.md). To try the installed binary without a source checkout, follow the [first-run walkthrough](first-run.md). For coding-agent integration, see [Invar with Pi](../integrations/pi/README.md).
 
 ## Install from GitHub Releases
 
