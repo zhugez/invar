@@ -112,13 +112,16 @@ Defaults: a one-second deadline and one MiB per stream, with configurable bounde
 
 ## Development and evidence
 
+After installing `just`, run the checks through the project recipes:
+
 ```sh
-cargo fmt --check
-cargo clippy --locked --all-targets -- -D warnings
-cargo test --locked --all-targets
-cargo +1.88.0 test --locked --all-targets
+just fmt
+just lint
+just test
+just msrv
+just check
 ```
 
-See [verification evidence](../docs/verification.md), [contribution guidance](../CONTRIBUTING.md), [architecture](../docs/architecture.md), [research](../docs/research/landscape.md), [roadmap](../ROADMAP.md), and [engineering state](../docs/engineering-state.md).
+`just check` runs all four checks in sequence. See [verification evidence](../docs/verification.md), [contribution guidance](../CONTRIBUTING.md), [architecture](../docs/architecture.md), [research](../docs/research/landscape.md), [roadmap](../ROADMAP.md), and [engineering state](../docs/engineering-state.md).
 
 Apache-2.0. See [LICENSE](../LICENSE).

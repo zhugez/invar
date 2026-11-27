@@ -6,16 +6,15 @@ Before editing, read [scope and formats](docs/specification.md), [architecture d
 
 ## Checks
 
-Run from the repository root:
+Install `just` with `cargo install just --locked`. Run from the repository root:
 
 ~~~sh
-cargo fmt --check
-cargo clippy --locked --all-targets -- -D warnings
-cargo test --locked --all-targets
-cargo +1.88.0 test --locked --all-targets
+just check
 cargo build --locked
 python3 scripts/demo.py --invar target/debug/invar
 ~~~
+
+`just check` runs formatting, Clippy, tests, and minimum Rust version tests. Run `just fmt`, `just lint`, `just test`, or `just msrv` for an individual check.
 
 Install the minimum toolchain with rustup toolchain install 1.88.0 --profile minimal if necessary. Build on Linux and test natively on macOS before claiming runtime support there. A cross-target cargo check does not test linking or process semantics.
 
