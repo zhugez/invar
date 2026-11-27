@@ -85,7 +85,7 @@ Run it from a source checkout with Python 3 and Invar on PATH:
 python3 scripts/demo.py --invar "$(command -v invar)"
 ```
 
-The fixture's membership/count checks stay green because they omit ordering. An ordering assertion would also catch the change. Invar adds observed coverage; it complements those tests.
+The fixture's membership/count checks stay green because they omit ordering. An ordering assertion would also catch the change.
 
 The [CLI self-check](docs/verification.md#invar-checks-its-own-json-interface) injects a JSON compatibility regression into an isolated copy of Invar itself, detects it, and verifies the repair.
 
@@ -95,13 +95,13 @@ Use `invar --json verify` for a versioned, machine-readable report.
 
 | Exit | Meaning |
 | --- | --- |
-| `0` | Success; verification matched all configured examples. |
+| `0` | Success. Verification matched all configured examples. |
 | `1` | Behavior regression. |
 | `2` | Configuration, execution, or infrastructure error. |
 | `3` | Missing, invalid, or mismatched baseline. |
 
 - **Examples, not a proof.** A pass covers the commands you configured. Comparison is exact, with bounded runtime and output. There is no normalization or semantic JSON comparison yet.
-- **Approval needs review.** Hashes pin a candidate; they do not authenticate a reviewer. Protect the executable, configuration, and baseline from unauthorized changes.
+- **Approval needs review.** Hashes pin a candidate. They do not authenticate a reviewer. Protect the executable, configuration, and baseline from unauthorized changes.
 - **Commands are not sandboxed.** They run with your filesystem and network access. Review commands before capture. Read the [security policy](SECURITY.md).
 
 ## Documentation
