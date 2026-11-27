@@ -1,128 +1,115 @@
-# Invar
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="brand/assets/logo-reversed.svg">
+    <source media="(prefers-color-scheme: light)" srcset="brand/assets/logo-primary.svg">
+    <img src="brand/assets/logo-primary.svg" alt="Invar" width="272" height="66">
+  </picture>
+</p>
 
-**Change code. Preserve behavior.**
+<h1 align="center">Change code. Preserve behavior.</h1>
 
-Invar v0.1 is a local behavioral guardrail for coding agents and their maintainers. It records reviewed commands, requires explicit approval, and compares later runs with accepted behavior. It checks exit code, stdout, and stderr byte for byte.
+<p align="center">A local behavior check for code changes.</p>
 
-It complements existing tests. A passing result covers the configured examples, not every possible behavior.
+<p align="center">
+  <a href="#install">Install</a> ·
+  <a href="#quick-start">Quick start</a> ·
+  <a href="#see-it-catch-a-regression">Demos</a> ·
+  <a href="#documentation">Documentation</a>
+</p>
 
-## Install from GitHub Releases
+Capture reviewed commands, approve a baseline, then compare later runs against it. Invar checks **exit code, stdout, and stderr byte for byte**, alongside your existing tests.
 
-For **Linux/WSL x86_64**, install the prebuilt release with one command:
+## Install
 
 ```sh
 curl -fsSL https://github.com/zhugez/invar/raw/main/install.sh | sh
 ```
 
-The installer currently installs **v0.1.0**. It checks the archive against a pinned SHA-256, retains the complete package under `${XDG_DATA_HOME:-$HOME/.local/share}/invar/0.1.0`, and links `~/.local/bin/invar` to the executable. It needs no sudo, Rust, or Python. Your configured commands still need their own runtimes.
+**Linux / WSL x86_64 · v0.1.0 · No sudo or Rust required.**
 
-If `~/.local/bin` is absent from PATH, the installer adds it to the Bash, Zsh, or POSIX shell configuration. Open a new terminal after that change. Other shells receive a PATH instruction. An existing executable or symlink from another installation is left untouched.
+The installer checks a pinned SHA-256 and sets up your shell's PATH when supported. Open a new terminal afterward. Your configured commands still need their own runtimes.
 
-See [install.sh](install.sh) for the installer and [manual download instructions](docs/releases/v0.1.0.md) for the [v0.1.0 archive](https://github.com/zhugez/invar/releases/tag/v0.1.0). The archive retains licenses, dependency notices, and build provenance. Set `INVAR_BIN` to the absolute path of the installed `invar` executable to use the examples below. Repository demonstration scripts require a source checkout.
+[Manual installation](docs/releases/v0.1.0.md) · [Build from source](docs/getting-started.md#build-from-source)
 
-## Build from source
+## Quick start
 
-Requirements: Rust 1.88 or newer and Linux or macOS. Execution is verified on x86_64 Linux under WSL2. The macOS x86_64 compile check passes. Native macOS linking and execution are untested. Windows is unsupported.
+Run these commands from your project's directory.
 
-From this repository:
+1. **Choose what to preserve.**
 
-```sh
-cargo build --release --locked
-INVAR_BIN="$PWD/target/release/invar"
-"$INVAR_BIN" --version
+   ```sh
+   invar init
+   ```
+
+   Review `invar.json`. Replace the sample `printf` case with a command you want to check. Initialization executes nothing. See the [configuration format](docs/specification.md#configuration).
+
+2. **Capture a candidate.**
+
+   ```sh
+   invar capture
+   ```
+
+   This records command results in `.invar/candidate.json`. It does not approve them.
+
+3. **Review and approve.**
+
+   Inspect the captured configuration, exit code, stdout, and stderr. Set `REVIEWED_SHA256` to the exact hash of the file you reviewed. The [review recipe](docs/getting-started.md#use-your-own-project) shows how to decode captured bytes and hash that same file.
+
+   ```sh
+   invar lock --candidate "$REVIEWED_SHA256"
+   ```
+
+4. **Change code, then verify.**
+
+   ```sh
+   invar verify
+   ```
+
+   A changed result reports a regression. Verification never rewrites the configuration, candidate, or accepted baseline. Configured commands can still write files.
+
+Commit `invar.json`, `.invar/.gitignore`, and `.invar/accepted.json` for review. Do not automatically recapture and approve after each code change.
+
+## See it catch a regression
+
+The ordering demo captures sorted names, reverses their order, then restores it: **pass → regression → pass**. The regression report begins:
+
+```text
+verify: regression (exit 1)
+  sorted-names: regression
+    stdout changed
 ```
 
-Use that executable directly. For a local Cargo installation, run `cargo install --path . --locked` after checking for an existing `invar` executable.
-
-The package is named `invar-behavior`, the executable is `invar`, and crates.io publication is disabled. Existing Invar names overlap. See the [naming review](docs/research/competitive-analysis.md).
-
-## Try the complete workflow
-
-Python 3 is required for this demonstration and the development tests. The core CLI requires only the commands you configure.
+Run it from a source checkout with Python 3 and Invar on PATH:
 
 ```sh
-python3 scripts/demo.py --invar "$INVAR_BIN"
+python3 scripts/demo.py --invar "$(command -v invar)"
 ```
 
-The script creates a clean temporary project and removes it afterward. It captures alphabetically sorted names, inspects the candidate, approves its exact hash, and verifies a pass. It then reverses the sort. The fixture's conventional membership/count checks still pass, while Invar reports a stdout regression. Restoring the sort returns verification to pass.
+The fixture's membership/count checks stay green because they omit ordering. An ordering assertion would also catch the change. Invar adds observed coverage; it complements those tests.
 
-An ordinary ordering assertion would also catch this regression. The example demonstrates additional observed coverage, not superiority to conventional tests.
+The [CLI self-check](docs/verification.md#invar-checks-its-own-json-interface) injects a JSON compatibility regression into an isolated copy of Invar itself, detects it, and verifies the repair.
 
-For a check against Invar's own CLI, run `python3 scripts/dogfood.py --invar "$INVAR_BIN"`. It builds an isolated copy offline and deliberately renames the public JSON field `command` to `operation`. The existing tests pass, but a representative Python CI consumer fails and the original Invar executable detects the changed output. Restoring the field returns verification to pass. The script removes its temporary source/build directories and checks that the original Rust source remains unchanged. This is an injected compatibility regression in the actual CLI, not evidence from an external customer project.
+## Results and boundaries
 
-## Use your own project
-
-This example creates a separate temporary project. Initialization executes nothing. Review `invar.json` before capture. The generated example invokes `printf` with an argument array.
-
-```sh
-INVAR_PROJECT="$(mktemp -d)"
-"$INVAR_BIN" --project "$INVAR_PROJECT" init
-python3 -m json.tool "$INVAR_PROJECT/invar.json"
-"$INVAR_BIN" --project "$INVAR_PROJECT" capture
-```
-
-Inspect the captured configuration and all three result channels. This command displays escaped bytes and retains the identity of the exact file it reads:
-
-```sh
-INVAR_CANDIDATE_SHA256="$(python3 - "$INVAR_PROJECT" <<'PY'
-import hashlib
-import json
-from pathlib import Path
-import sys
-raw = (Path(sys.argv[1]) / ".invar/candidate.json").read_bytes()
-snapshot = json.loads(raw)
-print(json.dumps(snapshot["config"], indent=2), file=sys.stderr)
-for case in snapshot["observations"]:
-    print(case["id"], "exit:", case["exit_code"], file=sys.stderr)
-    print("stdout:", repr(bytes.fromhex(case["stdout"]["hex"])), file=sys.stderr)
-    print("stderr:", repr(bytes.fromhex(case["stderr"]["hex"])), file=sys.stderr)
-print(hashlib.sha256(raw).hexdigest())
-PY
-)"
-```
-
-After you approve what you inspected, execute:
-
-```sh
-"$INVAR_BIN" --project "$INVAR_PROJECT" lock --candidate "$INVAR_CANDIDATE_SHA256"
-"$INVAR_BIN" --project "$INVAR_PROJECT" verify
-"$INVAR_BIN" --project "$INVAR_PROJECT" verify --json
-```
-
-For an existing project, run `init` in that directory and replace the sample case with a reviewed command. Commands receive no stdin. They use the configured project-relative `cwd` and a cleared environment with PATH, LANG=C, LC_ALL=C, and TZ=UTC. Explicit `env` entries override those values. Arguments never receive implicit shell expansion. Name a shell explicitly in `argv` only when you intend shell execution.
-
-Keep `invar.json`, `.invar/.gitignore`, and `.invar/accepted.json` under ordinary source review. The generated ignore file excludes transient candidates and the writer lock. Capture never accepts changes. Replacing an existing accepted snapshot requires a new reviewed capture and `lock --candidate "$INVAR_CANDIDATE_SHA256" --replace`.
-
-Verification never writes accepted expectations, candidates, or configuration. Your configured commands can still change project files.
-
-## Results and limits
-
-`--json` emits one version-1 report. Case changes identify the channel, byte lengths, SHA-256 values, first differing offset, and escaped previews. Expected nonzero application exits can be approved. Spawn failures, signals, timeouts, and exceeded output limits are execution errors.
+Use `invar --json verify` for a versioned, machine-readable report.
 
 | Exit | Meaning |
 | --- | --- |
-| 0 | Success; verification matched all examples. |
-| 1 | Behavior regression. |
-| 2 | Configuration, execution, or infrastructure error. |
-| 3 | Missing, invalid, or mismatched baseline. |
+| `0` | Success; verification matched all configured examples. |
+| `1` | Behavior regression. |
+| `2` | Configuration, execution, or infrastructure error. |
+| `3` | Missing, invalid, or mismatched baseline. |
 
-Configuration validation precedes baseline validation. Baseline failures execute no cases. During execution, errors take precedence over regressions. See the [specification](docs/specification.md) for formats and all limits.
+- **Examples, not a proof.** A pass covers the commands you configured. Comparison is exact, with bounded runtime and output. There is no normalization or semantic JSON comparison yet.
+- **Approval needs review.** Hashes pin a candidate; they do not authenticate a reviewer. Protect the executable, configuration, and baseline from unauthorized changes.
+- **Commands are not sandboxed.** They run with your filesystem and network access. Review commands before capture. Read the [security policy](SECURITY.md).
 
-Defaults: a one-second deadline and one MiB per stream, with configurable bounded limits. Suites allow at most 32 cases and eight MiB of aggregate captured output. Comparison is exact. No normalization, semantic JSON, or filesystem contracts exist yet.
+## Documentation
 
-**Trust is local.** Hashes detect corruption and pin a candidate. They do not authorize approval. An agent with sufficient write access can alter the baseline and recompute hashes. Protect the executable, configuration, baseline, and review process externally.
+- [Getting started](docs/getting-started.md) — detailed installation, source builds, demonstrations, and baseline review.
+- [Specification](docs/specification.md) · [Architecture](docs/architecture.md) — formats, execution rules, limits, and storage.
+- [Contributing](CONTRIBUTING.md) · [Verification evidence](docs/verification.md) — development checks and what has been exercised.
+- [Roadmap](ROADMAP.md) · [Engineering state](docs/engineering-state.md) · [Research](docs/research/landscape.md) — current scope, gaps, and decisions.
+- [Brand kit](brand/README.md) — proposed identity, logo assets, colors, and typography.
 
-**Execution is not sandboxed.** Process groups clean up ordinary descendants. Escaped sessions require external containment. Commands can access files and networks. Do not run untrusted commands with privileges. See [SECURITY.md](SECURITY.md).
-
-## Development and evidence
-
-```sh
-cargo fmt --check
-cargo clippy --locked --all-targets -- -D warnings
-cargo test --locked --all-targets
-cargo +1.88.0 test --locked --all-targets
-```
-
-See [verification evidence](docs/verification.md), [contribution guidance](CONTRIBUTING.md), [architecture](docs/architecture.md), [research](docs/research/landscape.md), [roadmap](ROADMAP.md), and [engineering state](docs/engineering-state.md).
-
-Apache-2.0. See [LICENSE](LICENSE).
+[Apache-2.0](LICENSE)
